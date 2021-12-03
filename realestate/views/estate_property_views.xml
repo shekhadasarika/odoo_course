@@ -14,6 +14,41 @@
         </field>
     </record>
 
+    <!--<record id="bank_property_form" model="ir.ui.view">
+        <field name="name">Bank property Form</field>
+        <field name="model">estate.property</field>
+        <field name="inherit_id" ref="estate.estate_property_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='date_deadline']" position="after">
+               <field name="bankname"/>
+               <field name="bankintrest"/>
+            </xpath>
+
+        </field>
+    </record> -->
+
+     <record id="res_partner_view_form" model="ir.ui.view">
+        <field name="name">Res Partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='contact_addresses']" position="after">
+               <page string="Bids">
+                   <field name="offer_ids"/>
+                      <!-- <tree>
+
+                        <field name="partner_id"/>
+                        <field name="status"/>
+
+                       </tree> -->
+               </page>
+            </xpath>
+
+        </field>
+    </record>
+
 
 
 
@@ -65,6 +100,103 @@
             </tree>
 		</field>
 	</record>
+
+    <record id="estate_property_calendar" model="ir.ui.view">
+        <field name="name">Estate Property Calendar</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <calendar string="Property Available" date_start="date_deadline" color="id">
+                <field name="name"/>
+            </calendar>
+        </field>
+    </record>
+
+
+    <record id="estate_property_kanban" model="ir.ui.view">
+        <field name="name">Estate Property Kanban</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="image"/>
+                <field name="id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <t t-if="record.image.raw_value">
+                                <div class="o_kanban_image"> 
+                                    <img t-att-src="kanban_image('estate.property','image',record.id.raw_value)"/>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="o_kanban_image"> 
+                                    <img t-att-src="_s + '/base/static/img/avatar_grey.png'" alt="add image"/>
+                                </div>
+                                
+                            </t>
+                            <div class="o_kanban_details">
+                                <strong><field name="name"/></strong>
+                                <ul>
+                                    <li><field name="date_availability"/></li>
+                                    <li><field name="selling_price"/></li>
+                                    
+                                </ul>
+
+                                 <!--<button class="btn btn-primary" name="%(real_estate_properties_offer_action)d" type="action">
+
+                                    <field name="property_offer_ids"/>
+                                 </button> -->
+                                 <button class="btn btn-primary" name="open_offer" type="object">
+
+                                    <field name="property_offer_ids"/>
+                                 </button>
+                            </div>
+
+
+                            
+                            <!--
+                            <div> 
+                                <b><field name="name"/></b><br/>
+                                
+                           
+                               <field name="selling_price"/><br/>
+                            
+                            
+                                <button name="action_sold" type="object" string="Sold"  class="btn btn-primary">Sold
+                                </button>
+                                
+                            </div> -->
+                                
+                        </div>         
+                    </t>
+                </templates>
+            </kanban>
+
+        </field>
+    </record>
+   <!--
+    <record id="estate_property_gantt" model="ir.ui.view">
+        <field name="name">Estate Property Gantt</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <gantt string="Data Available" date_start="date_availability"date_stop="date_deadline"/>
+               
+        </field>
+    </record>
+-->
+
+    <record id="estate_property_graph" model="ir.ui.view">
+        <field name="name">Estate Property Graph</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <graph string="Property price">
+                <field name="property_type_id"/>
+                <field name="expected_price" type="measure"/>
+            </graph>
+
+        </field>
+    </record>
+
+
 
 	<record id="estate_property_form" model="ir.ui.view">
 		<field name="name">Estate Property Name</field>
